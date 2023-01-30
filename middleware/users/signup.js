@@ -7,9 +7,8 @@ function validateSignup(req, res, next) {
     const validate = compileValidationSchema(signupSchema);
     const isValid = validate(req.body);
     if (isValid) return next();
-    const err = new Error();
+    const err = new Error("Signup data submitted is invalid.");
     err.statusCode = 400;
-    err.message = "Signup data submitted is invalid.";
     return next(err);
 }
 
@@ -17,9 +16,8 @@ function doPasswordsMatch(req, res, next) {
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
     if (password === confirmPassword) return next();
-    const err = new Error();
+    const err = new Error("Passwords do not match.");
     err.statusCode = 400;
-    err.message = "Signup data submitted is invalid.";
     return next(err);
 }
 
@@ -30,10 +28,10 @@ async function areEmailAndNicknameUnique(req, res, next) {
             req.body.nickname
         );
         if (areUnique) return next();
-        const err = new Error();
+        const err = new Error(
+            "There is already a user with that email address and/or nickname."
+        );
         err.statusCode = 400;
-        err.message =
-            "There is already a user with that email address and/or nickname.";
         return next(err);
     } catch (err) {
         err.statusCode = 500;
