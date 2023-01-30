@@ -7,7 +7,14 @@ const {
     areEmailAndNicknameUnique,
     hashPassword,
 } = require("../middleware/users/signup");
-const signupUser = require("../controllers/users");
+
+const {
+    validateLogin,
+    authenticateAndGetUser,
+    generateCookie,
+} = require("../middleware/users/login");
+
+const { signupUser, loginUser } = require("../controllers/users");
 
 users.post(
     "/signup",
@@ -16,6 +23,15 @@ users.post(
     areEmailAndNicknameUnique,
     hashPassword,
     signupUser
+);
+
+users.post(
+    "login",
+    validateLogin,
+    hashPassword,
+    authenticateAndGetUser,
+    generateCookie,
+    loginUser
 );
 
 module.exports = users;

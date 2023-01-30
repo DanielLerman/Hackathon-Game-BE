@@ -1,10 +1,19 @@
-function signupUser(req, res, next) {
-    const signupSuccess = addUserToDB(req.body);
-    if (signupSuccess) return res.send({ ok: true });
-    const err = new Error();
-    err.statusCode = 500;
-    err.message = "There was a problem signing you up.";
-    return next(err);
+async function signupUser(req, res, next) {
+    try {
+        const signupSuccess = await addUserToDB(req.body);
+        if (signupSuccess) return res.send({ ok: true });
+        throw new Error("There was a problem signing you up.");
+    } catch (err) {
+        err.statusCode = 500;
+        return next(err);
+    }
 }
 
-module.exports = signupUser;
+function loginUser(req, res) {
+    res.send({
+        ok: true,
+        user: { id: req.user.id, firstName: req.user.firstName },
+    });
+}
+
+module.exports = { signupUser, loginUser };
