@@ -18,7 +18,10 @@ function protectedToLoggedInUserOnly(req, res, next) {
         err.statusCode = 401;
         return next(err);
     }
-    if (req.params.id == payload.id) return next();
+    if (req.params.id == payload.id) {
+        req.auth = payload;
+        return next();
+    }
     const err = new Error("You can only view your own scores.");
     err.statusCode = 403;
     return next(err);

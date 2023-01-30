@@ -43,8 +43,9 @@ async function authenticateAndGetUser(req, res, next) {
 
 function generateCookie(req, res, next) {
     const token = signToken(
-        req.user.id,
-        req.user.firstName,
+        {
+            id: req.user.id,
+        },
         process.env.TOKEN_SECRET
     );
     res.cookie("authToken", token, {
