@@ -16,6 +16,11 @@ app.use(cookieParser());
 app.use("/users", users);
 app.use("/scores", scores);
 
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(err.statusCode).send(err.message);
+});
+
 function startServer() {
     try {
         app.listen(PORT, () => {
