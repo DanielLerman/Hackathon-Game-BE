@@ -3,16 +3,16 @@ const signupSchema = {
     properties: {
         firstName: { type: "string" },
         lastName: { type: "string" },
+        nickname: { type: "string" },
         email: { type: "string" },
-        phone: { type: "string" },
         password: { type: "string" },
         confirmPassword: { type: "string" },
     },
     required: [
         "firstName",
         "lastName",
+        "nickname",
         "email",
-        "phone",
         "password",
         "confirmPassword",
     ],
