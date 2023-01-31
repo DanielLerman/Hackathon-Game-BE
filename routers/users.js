@@ -26,7 +26,7 @@ users.post(
 );
 
 users.post(
-    "login",
+    "/login",
     validateLogin,
     hashPassword,
     authenticateAndGetUser,
