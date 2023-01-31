@@ -28,7 +28,6 @@ users.post(
 users.post(
     "/login",
     validateLogin,
-    hashPassword,
     authenticateAndGetUser,
     generateCookie,
     loginUser

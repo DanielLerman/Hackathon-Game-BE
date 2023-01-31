@@ -1,7 +1,7 @@
 const { loginSchema } = require("../validation/schemas");
 const compileValidationSchema = require("../validation/compileValidationSchema");
-const hash = require("../../lib/bcrypt");
-const signToken = require("../../lib/jwt");
+const {hash} = require("../../lib/bcrypt");
+const {signToken} = require("../../lib/jwt");
 const checkDBForMatchingEmailAndPassword = require("../../models/users/checkDBForMatchingEmailAndPassword");
 
 function validateLogin(req, res, next) {
@@ -16,7 +16,7 @@ function validateLogin(req, res, next) {
 
 function hashPassword(req, res, next) {
     const hashedPassword = hash(req.body.password, 10);
-    req.password = hashedPassword;
+    req.body.password = hashedPassword;
     next();
 }
 
@@ -27,6 +27,7 @@ async function authenticateAndGetUser(req, res, next) {
             req.body.password
         );
         if (user) {
+            console.log(user);
             req.user = user;
             return next();
         }

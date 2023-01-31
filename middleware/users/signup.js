@@ -1,6 +1,6 @@
 const { signupSchema } = require("../validation/schemas");
 const compileValidationSchema = require("../validation/compileValidationSchema");
-const hash = require("../../lib/bcrypt");
+const {hash} = require("../../lib/bcrypt");
 const checkDBForExistingEmail = require("../../models/users/checkDBForExistingEmail");
 
 function validateSignup(req, res, next) {
@@ -24,8 +24,7 @@ function doPasswordsMatch(req, res, next) {
 async function isEmailUnique(req, res, next) {
     try {
         const areUnique = await checkDBForExistingEmail(
-            req.body.email,
-            req.body.nickname
+            req.body.email
         );
         if (areUnique) return next();
         const err = new Error(
@@ -42,7 +41,7 @@ async function isEmailUnique(req, res, next) {
 
 function hashPassword(req, res, next) {
     const hashedPassword = hash(req.body.password, 10);
-    req.password = hashedPassword;
+    req.body.password = hashedPassword;
     next();
 }
 
