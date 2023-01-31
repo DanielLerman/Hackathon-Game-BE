@@ -3,6 +3,8 @@ require("dotenv").config();
 const PORT = process.env.PORT || 8080;
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const mongoose = require('mongoose');
+const connectDB = require('./database/dbConfig')
 
 const users = require("./routers/users");
 const scores = require("./routers/scores");
@@ -21,14 +23,24 @@ app.use((err, req, res, next) => {
     res.status(err.statusCode).send(err.message);
 });
 
-function startServer() {
-    try {
-        app.listen(PORT, () => {
+connectDB();
+
+// function startServer() {
+//     try {
+//         app.listen(PORT, () => {
+//             console.log(`Server listening on port ${PORT}`);
+//         });
+//     } catch (err) {
+//         console.log("There was a problem starting the server");
+//     }
+// }
+
+// startServer();
+
+
+mongoose.connection.once("open", () => {
+    console.log("connected to mongoDB");
+     app.listen(PORT, () => {
             console.log(`Server listening on port ${PORT}`);
         });
-    } catch (err) {
-        console.log("There was a problem starting the server");
-    }
-}
-
-startServer();
+});
