@@ -2,11 +2,8 @@ const addUserToDB = require("../models/users/addUserToDB");
 
 async function signupUser(req, res, next) {
     try {
-        const { firstName, lastName, nickname, email, password } = req.body;
+        const { email, password } = req.body;
         const signupSuccess = await addUserToDB(
-            firstName,
-            lastName,
-            nickname,
             email,
             password
         );
@@ -21,7 +18,7 @@ async function signupUser(req, res, next) {
 function loginUser(req, res) {
     res.send({
         ok: true,
-        user: { id: req.user.id, firstName: req.user.firstName },
+        user: { id: req.user.id },
     });
 }
 

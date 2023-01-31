@@ -4,7 +4,7 @@ const users = express.Router();
 const {
     validateSignup,
     doPasswordsMatch,
-    areEmailAndNicknameUnique,
+    isEmailUnique,
     hashPassword,
 } = require("../middleware/users/signup");
 
@@ -20,7 +20,7 @@ users.post(
     "/signup",
     validateSignup,
     doPasswordsMatch,
-    areEmailAndNicknameUnique,
+    isEmailUnique,
     hashPassword,
     signupUser
 );

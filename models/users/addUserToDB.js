@@ -1,4 +1,4 @@
-async function addUserToDB(firstName, lastName, nickname, email, password) {
+async function addUserToDB(email, password) {
     // Add awaited Mongo or MySQL query here
 }
 
