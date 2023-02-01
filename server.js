@@ -6,13 +6,17 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const connectDB = require("./database/dbConfig");
 
+const cors = require("cors");
+
 const users = require("./routers/users");
 
 const app = express();
+const http = require("http").Server(app);
 
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors({ credentials: true, origin: true }));
 
 app.use("/users", users);
 
@@ -20,9 +24,7 @@ app.use((err, req, res, next) => {
     console.log(err);
     res.status(err.statusCode).send(err.message);
 });
-const http = require("http").Server(app);
-const cors = require("cors");
-app.use(cors());
+
 const {
     findAvailableRoom,
     joinRoom,
